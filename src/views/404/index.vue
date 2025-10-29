@@ -1,12 +1,9 @@
 <template>
- <div class="">
- <h2>404路由</h2>
- </div>
+  <div class="">
+    <h2>404路由</h2>
+  </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-</script>
-
-<style scoped>
-</style>
+<style scoped></style>
