@@ -1,7 +1,11 @@
-<script setup lang="ts"></script>
-
 <template>
-  <h1>我是App组件</h1>
+ <div class="">
+    <RouterView/>
+ </div>
 </template>
 
-<style scoped></style>
+<script setup lang="ts">
+</script>
+
+<style scoped>
+</style>
