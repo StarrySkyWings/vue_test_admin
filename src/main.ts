@@ -1,5 +1,4 @@
 import { createApp } from "vue";
-import { createPinia } from "pinia";
 // 引入element-plus插件与样式
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
@@ -13,12 +12,14 @@ import globalComponents from "@/components";
 import "@/styles/index.scss";
 // 引入路由
 import router from "./router";
+// 引入仓库
+import pinia from "./stores";
 import App from "@/App.vue";
 
 // 获取应用实例对象
 const app = createApp(App);
-
-app.use(createPinia());
+// 安装仓库
+app.use(pinia);
 // 注册模板路由
 app.use(router);
 // 安装element-plus插件
