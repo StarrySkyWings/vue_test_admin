@@ -1,14 +1,13 @@
 <template>
- <div class="">
+  <div class="">
     <h1>角色管理</h1>
- </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 defineOptions({
-    name:'Roles'
-})
+  name: "Roles",
+});
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

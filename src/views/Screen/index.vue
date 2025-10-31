@@ -1,14 +1,13 @@
 <template>
- <div class="">
+  <div class="">
     <h1>我是数据大屏</h1>
- </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 defineOptions({
-    name:'Screen'
-})
+  name: "Screen",
+});
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

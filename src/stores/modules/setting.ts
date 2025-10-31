@@ -5,7 +5,7 @@ let useLayOutSettingStore = defineStore("SettingStore", {
   state: () => {
     return {
       fold: false, //用于控制菜单折叠还是打开图标的切换变量
-      refresh: false,//仓库这个属性用于控制刷新效果
+      refresh: false, //仓库这个属性用于控制刷新效果
     };
   },
 });

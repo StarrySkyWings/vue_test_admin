@@ -1,14 +1,13 @@
 <template>
- <div class="">
+  <div class="">
     <h1>权限管理</h1>
- </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 defineOptions({
-    name:'Permission'
-})
+  name: "Permission",
+});
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
