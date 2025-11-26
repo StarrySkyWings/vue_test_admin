@@ -7,11 +7,12 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: $base-menu-background;
+    // background: $base-menu-background;
+    
 }
 
 ::-webkit-scrollbar-thumb{
     width: 10px;
-    background-color: yellowgreen;
+    background-color: gray;
     border-radius: 10px;
 }

@@ -109,7 +109,6 @@ let LayOutSettingStore = useLayOutSettingStore();
     height: calc(100vh - $base-tabbar-height);
     left: $base-menu-width;
     top: $base-tabbar-height;
-    background-color: yellowgreen;
     padding: 20px;
     overflow: auto;
     transition: all 0.3s;
