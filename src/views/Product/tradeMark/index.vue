@@ -407,6 +407,7 @@ const removeTradeMark = async (id: number) => {
       type: "error",
       message: "删除品牌失败",
     });
+    loading.value = false;
   }
 };
 

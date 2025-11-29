@@ -93,7 +93,7 @@
       @change="getHasSku"
     />
     <!-- 抽屉组件：展示商品详情 -->
-    <el-drawer v-model="drawer" size="50%">
+    <el-drawer v-model="drawer" size="40%">
       <!-- 标题部分 -->
       <template #header>
         <h4>商品详情</h4>
@@ -263,6 +263,7 @@ const removeSku = async (id: number) => {
       type: "error",
       message: "删除失败",
     });
+    loading.value = false;
   }
 };
 // 查看商品详情按钮的回调

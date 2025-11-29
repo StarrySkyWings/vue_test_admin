@@ -5,96 +5,37 @@
     <el-card style="margin: 10px 0">
       <!-- v-if或v-show:都可以实现显示与隐藏 -->
       <div v-show="scene == 0">
-        <el-button
-          @click="addSpu"
-          type="primary"
-          size="default"
-          icon="Plus"
-          :disabled="categoryStore.c3Id ? false : true"
-          >添加SPU</el-button
-        >
+        <el-button @click="addSpu" type="primary" size="default" icon="Plus"
+          :disabled="categoryStore.c3Id ? false : true">添加SPU</el-button>
         <!-- 展示已有的SPU数据 -->
-        <el-table
-          v-loading="loading"
-          border
-          style="margin: 10px 0"
-          :data="records"
-        >
-          <el-table-column
-            width="80px"
-            label="序号"
-            type="index"
-            align="center"
-          ></el-table-column>
+        <el-table v-loading="loading" border style="margin: 10px 0" :data="records">
+          <el-table-column width="80px" label="序号" type="index" align="center"></el-table-column>
           <el-table-column label="SPU名称" prop="spuName"></el-table-column>
           <el-table-column label="SPU描述" prop="description"></el-table-column>
           <el-table-column label="操作">
             <template #="{ row, $index }">
-              <el-button
-                type="primary"
-                size="default"
-                icon="Plus"
-                title="添加SKU"
-                @click="addSku(row)"
-              ></el-button>
-              <el-button
-                type="success"
-                size="default"
-                icon="View"
-                title="查看SKU列表"
-                @click="findSku(row)"
-              ></el-button>
-              <el-button
-                type="warning"
-                size="default"
-                icon="Edit"
-                title="修改SPU"
-                @click="updateSpu(row)"
-              ></el-button>
-              <el-popconfirm
-                icon="Delete"
-                :title="`你确定要删除${row.spuName}?`"
-                width="180px"
-                @confirm="deleteSpu(row)"
-              >
+              <el-button type="primary" size="default" icon="Plus" title="添加SKU" @click="addSku(row)"></el-button>
+              <el-button type="success" size="default" icon="View" title="查看SKU列表" @click="findSku(row)"></el-button>
+              <el-button type="warning" size="default" icon="Edit" title="修改SPU" @click="updateSpu(row)"></el-button>
+              <el-popconfirm icon="Delete" :title="`你确定要删除${row.spuName}?`" width="180px" @confirm="deleteSpu(row)">
                 <template #reference>
-                  <el-button
-                    type="danger"
-                    size="default"
-                    icon="Delete"
-                    title="删除SPU"
-                  ></el-button>
+                  <el-button type="danger" size="default" icon="Delete" title="删除SPU"></el-button>
                 </template>
               </el-popconfirm>
             </template>
           </el-table-column>
         </el-table>
         <!-- 分页器 -->
-        <el-pagination
-          v-model:current-page="pageNo"
-          v-model:page-size="pageSize"
-          :page-sizes="[3, 5, 7, 9]"
-          :background="true"
-          layout="prev, pager, next, jumper,->,sizes,total"
-          :total="total"
-          @change="getHasSpu"
-        />
+        <el-pagination v-model:current-page="pageNo" v-model:page-size="pageSize" :page-sizes="[3, 5, 7, 9]"
+          :background="true" layout="prev, pager, next, jumper,->,sizes,total" :total="total" @change="getHasSpu" />
       </div>
       <!-- 添加SPU|修改SPU子组件 -->
-      <SpuForm
-        ref="spu"
-        v-show="scene == 1"
-        @changeScene="changeScene"
-      ></SpuForm>
+      <SpuForm ref="spu" v-show="scene == 1" @changeScene="changeScene"></SpuForm>
       <!-- 添加SKU的子组件 -->
-      <SkuForm
-        ref="sku"
-        v-show="scene == 2"
-        @changeScene="changeScene"
-      ></SkuForm>
+      <SkuForm ref="sku" v-show="scene == 2" @changeScene="changeScene"></SkuForm>
       <!-- dialog对话框：展示已有的SKU数据 -->
       <el-dialog v-model="show" title="SKU列表">
-        <el-table border :data="skuArr">
+        <el-table border :data="skuArr" v-loading="load">
           <el-table-column label="SKU名称" prop="skuName"></el-table-column>
           <el-table-column label="SKU价格" prop="price"></el-table-column>
           <el-table-column label="SKU重量" prop="weight"></el-table-column>
@@ -102,14 +43,8 @@
             <template #="{ row }">
               <!-- <img :src="row.skuDefaultImg" style="width: 100px;height: 100px;"> -->
               <!-- 添加预览功能的图片 -->
-              <el-image
-                style="width: 100px; height: 100px"
-                :src="row.skuDefaultImg"
-                :preview-src-list="[row.skuDefaultImg]"
-                fit="contain"
-                hide-on-click-modal
-                :preview-teleported="true"
-              >
+              <el-image style="width: 100px; height: 100px" :src="row.skuDefaultImg"
+                :preview-src-list="[row.skuDefaultImg]" fit="contain" hide-on-click-modal :preview-teleported="true">
                 <template #error>
                   <div class="image-slot">
                     <el-icon>
@@ -155,6 +90,7 @@ import SpuForm from "./components/SpuForm.vue";
 import SkuForm from "./components/SkuForm.vue";
 import { ElMessage } from "element-plus";
 let loading = ref<boolean>(false);
+let load = ref<boolean>(false);
 let categoryStore = useCategoryStore();
 // 场景的数据
 let scene = ref<number>(0); //0:显示已有SPU  1:添加或修改已有SPU  2:添加SKU的结构
@@ -205,7 +141,7 @@ const addSpu = () => {
   spu.value.initAddSpu(categoryStore.c3Id);
 
   nextTick(() => {
-    spu.value.clearValidate(["spuName", "tmId", "description"]);
+    spu.value.resetFields();
   });
 };
 // 子组件SpuForm绑定自定义事件，让子组件通知父组件切换场景为0
@@ -235,14 +171,14 @@ const addSku = (row: SpuData) => {
 };
 
 const findSku = async (row: SpuData) => {
-  loading.value = true;
+  // 对话框显示出来
+  show.value = true;
+  load.value = true;
   let result: SkuInfoData = await reqSkuList(row.id as number);
   // console.log(result)
   if (result.code == 200) {
     skuArr.value = result.data;
-    loading.value = false;
-    // 对话框显示出来
-    show.value = true;
+    load.value = false;
   }
 };
 
@@ -263,6 +199,7 @@ const deleteSpu = async (row: SpuData) => {
       type: "error",
       message: "删除失败",
     });
+    loading.value = false;
   }
 };
 

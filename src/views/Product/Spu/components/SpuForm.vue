@@ -90,7 +90,7 @@
         >添加销售属性</el-button
       >
       <!-- table展示销售属性与属性值的地方 -->
-      <el-table border style="margin: 10px 0" :data="saleAttr">
+      <el-table border style="margin: 10px 0" :data="saleAttr" v-loading="loading">
         <el-table-column
           width="80px"
           label="序号"
@@ -190,7 +190,7 @@ let formRef = ref();
 let rules = reactive({
   spuName: [
     { required: true, message: "请输入SKU名称", trigger: "blur" },
-    { min: 2, max: 8, message: "长度应该是2到8", trigger: "blur" },
+    { min: 2, max: 8, message: "长度应该是2到8", trigger: "change" },
   ],
   tmId: [{ required: true, message: "请选择SPU品牌", trigger: "change" }],
   description: [{ required: true, message: "请输入SPU描述", trigger: "blur" }],
@@ -237,6 +237,7 @@ let unSelectSaleAttr = computed(() => {
 
 // 子组件书写一个方法
 const initHasSpuData = async (spu: SpuData) => {
+  loading.value = true
   // 存储已有的SPU对象，将来在模板下展示
   SpuParams.value = spu;
   // spu:即为父组件传递过来的已有SPU对象[不完整]
@@ -263,6 +264,7 @@ const initHasSpuData = async (spu: SpuData) => {
   saleAttr.value = result2.data;
   // 存储全部的销售属性
   allSaleAttr.value = result3.data;
+  loading.value = false
 };
 // 照片墙点击预览按钮时触发的钩子
 const handlePictureCardPreview = (file: any) => {
@@ -437,13 +439,13 @@ const initAddSpu = async (c3Id: number | string) => {
   loading.value = false;
 };
 
-const clearValidate = (fields?: string | string[]) => {
+const resetFields = () => {
   if (formRef.value) {
-    formRef.value.clearValidate(fields);
+    formRef.value.resetFields();
   }
 };
 // 对外暴露
-defineExpose({ initHasSpuData, initAddSpu, clearValidate });
+defineExpose({ initHasSpuData, initAddSpu, resetFields });
 </script>
 
 <style scoped></style>

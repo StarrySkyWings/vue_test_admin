@@ -182,7 +182,7 @@ const getAttr = async () => {
   const { c1Id, c2Id, c3Id } = categoryStore;
   // 获取分类下已有的属性与属性值
   let result: AttrResponseData = await reqAttr(c1Id, c2Id, c3Id);
-  console.log(result);
+  // console.log(result);
   if (result.code == 200) {
     attrArr.value = result.data;
   }
@@ -240,17 +240,21 @@ const addAttrValue = () => {
 };
 // 保存按钮的回调
 const save = async () => {
+  // 切换场景
+  scene.value = 0;
+  loading.value = true
   // 发请求
   let result: any = await reqAddOrUpdateAttr(attrParams);
   // 添加属性|修改已有的属性已经成功
   if (result.code == 200) {
     // 切换场景
-    scene.value = 0;
+    // scene.value = 0;
     // 提示信息
     ElMessage({
       type: "success",
       message: attrParams.id ? "修改成功" : "添加成功",
     });
+    loading.value = false
     // 获取全部已有的属性与属性值
     getAttr();
   } else {
@@ -321,6 +325,7 @@ const deleteAttr = async (attrId: number) => {
       type: "error",
       message: "删除失败",
     });
+    loading.value = false;
   }
 };
 // 路由组件销毁时，把仓库分类相应的数据清空

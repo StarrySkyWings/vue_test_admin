@@ -23,6 +23,8 @@ let useUserStroe = defineStore("User", {
       menuRoutes: constantRoute, // 仓库存储生成菜单需要数组(路由)
       username: "",
       avatar: "",
+      roles: [],
+      routes: [],
     };
   },
   // 异步|逻辑的地方
@@ -53,6 +55,8 @@ let useUserStroe = defineStore("User", {
       if (result.code == 200) {
         this.username = result.data.name;
         this.avatar = result.data.avatar;
+        this.roles = result.data.roles;
+        this.routes = result.data.routes;
         return "ok";
       } else {
         return Promise.reject(new Error(result.message));
