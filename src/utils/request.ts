@@ -56,7 +56,7 @@ request.interceptors.response.use(
     // 定义一个变量：存储网络错误信息
     let message = "";
     // http状态码
-    let status = error.response?.status;
+    let status = error.response.status;
     switch (status) {
       case 401:
         message = "TOKEN过期";

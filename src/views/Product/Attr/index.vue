@@ -242,7 +242,7 @@ const addAttrValue = () => {
 const save = async () => {
   // 切换场景
   scene.value = 0;
-  loading.value = true
+  loading.value = true;
   // 发请求
   let result: any = await reqAddOrUpdateAttr(attrParams);
   // 添加属性|修改已有的属性已经成功
@@ -254,7 +254,7 @@ const save = async () => {
       type: "success",
       message: attrParams.id ? "修改成功" : "添加成功",
     });
-    loading.value = false
+    loading.value = false;
     // 获取全部已有的属性与属性值
     getAttr();
   } else {

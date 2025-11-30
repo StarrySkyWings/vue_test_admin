@@ -3,18 +3,39 @@
     <el-row>
       <el-col :span="12" :xs="0"></el-col>
       <el-col :span="12" :xs="24">
-        <el-form class="login_form" :model="loginForm" :rules="rules" ref="loginForms">
+        <el-form
+          class="login_form"
+          :model="loginForm"
+          :rules="rules"
+          ref="loginForms"
+        >
           <h1>Hello</h1>
           <h2>欢迎来到甄选平台</h2>
           <el-form-item prop="username">
-            <el-input :prefix-icon="User" v-model="loginForm.username" placeholder="请输入账号"></el-input>
+            <el-input
+              :prefix-icon="User"
+              v-model="loginForm.username"
+              placeholder="请输入账号"
+            ></el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input :prefix-icon="Lock" type="password" v-model="loginForm.password" show-password
-              placeholder="请输入密码"></el-input>
+            <el-input
+              :prefix-icon="Lock"
+              type="password"
+              v-model="loginForm.password"
+              show-password
+              placeholder="请输入密码"
+            ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button :loading="loading" class="login_btn" type="primary" size="default" @click="login">登录</el-button>
+            <el-button
+              :loading="loading"
+              class="login_btn"
+              type="primary"
+              size="default"
+              @click="login"
+              >登录</el-button
+            >
           </el-form-item>
         </el-form>
       </el-col>
@@ -51,7 +72,8 @@ let loginForm = reactive({
 let loginForms = ref();
 // 登录按钮回调
 const login = async () => {
-  try {// 保证全部表单校验通过再发请求
+  try {
+    // 保证全部表单校验通过再发请求
     await loginForms.value.validate();
 
     // 加载效果：开始加载

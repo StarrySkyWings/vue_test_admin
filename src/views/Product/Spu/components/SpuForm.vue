@@ -90,7 +90,12 @@
         >添加销售属性</el-button
       >
       <!-- table展示销售属性与属性值的地方 -->
-      <el-table border style="margin: 10px 0" :data="saleAttr" v-loading="loading">
+      <el-table
+        border
+        style="margin: 10px 0"
+        :data="saleAttr"
+        v-loading="loading"
+      >
         <el-table-column
           width="80px"
           label="序号"
@@ -237,7 +242,7 @@ let unSelectSaleAttr = computed(() => {
 
 // 子组件书写一个方法
 const initHasSpuData = async (spu: SpuData) => {
-  loading.value = true
+  loading.value = true;
   // 存储已有的SPU对象，将来在模板下展示
   SpuParams.value = spu;
   // spu:即为父组件传递过来的已有SPU对象[不完整]
@@ -264,7 +269,7 @@ const initHasSpuData = async (spu: SpuData) => {
   saleAttr.value = result2.data;
   // 存储全部的销售属性
   allSaleAttr.value = result3.data;
-  loading.value = false
+  loading.value = false;
 };
 // 照片墙点击预览按钮时触发的钩子
 const handlePictureCardPreview = (file: any) => {

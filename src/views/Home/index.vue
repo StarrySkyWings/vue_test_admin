@@ -9,15 +9,23 @@
         </div>
       </div> -->
       <div class="welcome">
-        <el-avatar :size="100" :src="userStore.avatar || 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'"></el-avatar>
+        <el-avatar
+          :size="100"
+          :src="
+            userStore.avatar ||
+            'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+          "
+        ></el-avatar>
         <div class="welcome-right">
-          <el-text style="font-size: var(--el-font-size-extra-large)" tag="b">欢迎回来～{{ userStore.username }}</el-text>
+          <el-text style="font-size: var(--el-font-size-extra-large)" tag="b"
+            >欢迎回来～{{ userStore.username }}</el-text
+          >
           <el-text tag="b" size="large">甄选运营平台</el-text>
         </div>
       </div>
     </el-card>
     <div class="welcome-img">
-      <svg-icon name="welcome" width="700px" height="700px"></svg-icon>
+      <svg-icon name="welcome" width="50vw" height="50vh"></svg-icon>
     </div>
   </div>
 </template>
@@ -27,10 +35,10 @@ defineOptions({
   name: "Home",
 });
 // 引入用户相关的仓库,获取当前用户的头像、昵称
-import useUserStroe from '@/stores/modules/user';
+import useUserStroe from "@/stores/modules/user";
 // import { getTime } from '@/utils/time';
 // 获取存储用户信息的仓库对象
-let userStore = useUserStroe()
+let userStore = useUserStroe();
 </script>
 
 <style scoped lang="scss">
@@ -77,5 +85,6 @@ let userStore = useUserStroe()
 .welcome-img {
   display: flex;
   justify-content: center;
+  margin-top: 50px;
 }
 </style>
