@@ -20,7 +20,12 @@
       </el-form>
     </el-card>
     <el-card style="margin-top: 10px">
-      <el-button v-has="'btn.Role.add'" type="primary" size="default" icon="Plus" @click="addRole"
+      <el-button
+        v-has="'btn.Role.add'"
+        type="primary"
+        size="default"
+        icon="Plus"
+        @click="addRole"
         >添加角色</el-button
       >
       <el-table

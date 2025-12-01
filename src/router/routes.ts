@@ -1,4 +1,3 @@
-
 // 对外暴露配置路由(常量路由)
 export const constantRoute = [
   {
@@ -53,7 +52,7 @@ export const constantRoute = [
       title: "数据大屏",
       icon: "Platform",
     },
-  }
+  },
 ];
 
 // 异步路由
@@ -145,7 +144,7 @@ export const asyncRoute = [
       },
     ],
   },
-]
+];
 
 // 任意路由
 export const anyRoute = {

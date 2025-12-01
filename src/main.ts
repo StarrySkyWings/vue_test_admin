@@ -17,7 +17,7 @@ import router from "./router";
 // 引入仓库
 import pinia from "./stores";
 // 引入自定义指令
-import {isHasButton} from '@/directive/has'
+import { isHasButton } from "@/directive/has";
 import App from "@/App.vue";
 
 // 获取应用实例对象
@@ -34,6 +34,6 @@ app.use(ElementPlus, {
 app.use(globalComponents);
 // 引入路由鉴权文件
 import "@/permission";
-isHasButton(app)
+isHasButton(app);
 // 将应用挂载到挂载点上
 app.mount("#app");

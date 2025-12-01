@@ -95,11 +95,11 @@ let useUserStroe = defineStore("User", {
         this.avatar = result.data.avatar;
         this.roles = result.data.roles;
         this.routes = result.data.routes;
-        this.buttons = result.data.buttons
+        this.buttons = result.data.buttons;
         // 计算当前用户需要展示的异步路由
         let userAsyncRoutes = filterAsyncRoute(
           cloneDeep(asyncRoute),
-          result.data.routes
+          result.data.routes,
         );
         // 菜单的数据
         // this.menuRoutes = [...constantRoute,...userAsyncRoutes,anyRoute]

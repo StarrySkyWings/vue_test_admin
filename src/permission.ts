@@ -43,7 +43,7 @@ router.beforeEach(async (to, from, next) => {
           // 放行
           // 万一刷新时是异步路由，可能获取到用户信息、异步路由还没有加载完毕，出现空白效果
           // 使用 replace: true 避免历史记录堆叠
-          if (to.path === '/') {
+          if (to.path === "/") {
             next();
           } else {
             next(to.path);

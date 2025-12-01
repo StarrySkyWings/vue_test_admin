@@ -20,7 +20,11 @@
       </el-form>
     </el-card>
     <el-card style="margin-top: 10px">
-      <el-button v-has="'btn.User.add'" type="primary" size="default" @click="addUser"
+      <el-button
+        v-has="'btn.User.add'"
+        type="primary"
+        size="default"
+        @click="addUser"
         >添加用户</el-button
       >
       <el-popconfirm

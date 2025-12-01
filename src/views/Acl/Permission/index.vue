@@ -37,7 +37,11 @@
             @confirm="removeMenu(row)"
           >
             <template #reference>
-              <el-button v-has="'btn.Permission.remove'" type="danger" size="default" v-if="row.level !== 1"
+              <el-button
+                v-has="'btn.Permission.remove'"
+                type="danger"
+                size="default"
+                v-if="row.level !== 1"
                 >删除</el-button
               >
             </template>

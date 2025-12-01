@@ -11,12 +11,9 @@
           >
           <p><el-text type="info">您可以点击下面按钮返回</el-text></p>
           <div>
-            <el-button
-            type="primary"
-            size="default"
-            @click="goHome"
-            >返回</el-button
-          >
+            <el-button type="primary" size="default" @click="goHome"
+              >返回</el-button
+            >
           </div>
         </el-space>
       </div>
@@ -25,11 +22,11 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 const router = useRouter();
 const goHome = () => {
-  router.replace('/home')
-}
+  router.replace("/home");
+};
 </script>
 
 <style scoped lang="scss">
