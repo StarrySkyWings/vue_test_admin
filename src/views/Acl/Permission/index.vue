@@ -19,6 +19,7 @@
             type="primary"
             size="default"
             v-if="row.level !== 4"
+            v-has="'btn.Permission.add'"
             >{{ getButtonText(row.level) }}</el-button
           >
           <el-button
@@ -26,6 +27,7 @@
             type="warning"
             size="default"
             v-if="row.level !== 1"
+            v-has="'btn.Permission.update'"
             >编辑</el-button
           >
           <el-popconfirm
@@ -35,7 +37,7 @@
             @confirm="removeMenu(row)"
           >
             <template #reference>
-              <el-button type="danger" size="default" v-if="row.level !== 1"
+              <el-button v-has="'btn.Permission.remove'" type="danger" size="default" v-if="row.level !== 1"
                 >删除</el-button
               >
             </template>
@@ -105,7 +107,7 @@ import type {
   PermissionResponseData,
 } from "@/api/acl/menu/type";
 import { ElMessage } from "element-plus";
-import { nextTick, onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import useUserStroe from "@/stores/modules/user";
 let userStore = useUserStroe();
 let loading = ref<boolean>(false);

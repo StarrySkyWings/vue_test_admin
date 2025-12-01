@@ -20,7 +20,7 @@
       </el-form>
     </el-card>
     <el-card style="margin-top: 10px">
-      <el-button type="primary" size="default" icon="Plus" @click="addRole"
+      <el-button v-has="'btn.Role.add'" type="primary" size="default" icon="Plus" @click="addRole"
         >添加角色</el-button
       >
       <el-table
@@ -67,6 +67,7 @@
               size="default"
               icon="User"
               @click="setPermission(row)"
+              v-has="'btn.Role.assgin'"
               >分配权限</el-button
             >
             <el-button
@@ -74,6 +75,7 @@
               size="default"
               icon="Edit"
               @click="updateRole(row)"
+              v-has="'btn.Role.update'"
               >编辑</el-button
             >
             <el-popconfirm
@@ -88,6 +90,7 @@
                   type="danger"
                   size="default"
                   icon="Delete"
+                  v-has="'btn.Role.remove'"
                   >删除</el-button
                 >
               </template>

@@ -1,97 +1,35 @@
 <template>
   <el-card>
-    <el-table
-      v-loading="loading"
-      border
-      style="margin: 10px 0px"
-      :data="skuArr"
-    >
-      <el-table-column
-        label="序号"
-        type="index"
-        align="center"
-        width="80px"
-      ></el-table-column>
-      <el-table-column
-        label="名称"
-        width="250px"
-        prop="skuName"
-      ></el-table-column>
-      <el-table-column
-        label="描述"
-        width="250px"
-        prop="skuDesc"
-      ></el-table-column>
+    <el-table v-loading="loading" border style="margin: 10px 0px" :data="skuArr">
+      <el-table-column label="序号" type="index" align="center" width="80px"></el-table-column>
+      <el-table-column label="名称" width="250px" prop="skuName"></el-table-column>
+      <el-table-column label="描述" width="250px" prop="skuDesc"></el-table-column>
       <el-table-column label="默认图片" width="250px">
         <template #="{ row }">
-          <img
-            :src="row.skuDefaultImg"
-            alt=""
-            style="width: 100px; height: 100px"
-          />
+          <img :src="row.skuDefaultImg" alt="" style="width: 100px; height: 100px" />
         </template>
       </el-table-column>
-      <el-table-column
-        label="重量(g)"
-        width="250px"
-        prop="weight"
-      ></el-table-column>
-      <el-table-column
-        label="价格(元)"
-        width="250px"
-        prop="price"
-      ></el-table-column>
+      <el-table-column label="重量(g)" width="250px" prop="weight"></el-table-column>
+      <el-table-column label="价格(元)" width="250px" prop="price"></el-table-column>
       <el-table-column label="操作" width="300px" fixed="right">
         <template #="{ row }">
-          <el-button
-            title="状态改变"
-            :loading="row.load"
-            :type="row.isSale === 1 ? 'primary' : 'info'"
-            size="default"
-            :icon="row.isSale === 1 ? 'Bottom' : 'Top'"
-            @click="updateSale(row)"
-          ></el-button>
-          <el-button
-            title="查看"
-            type="success"
-            size="default"
-            icon="View"
-            @click="findSku(row)"
-          ></el-button>
-          <el-button
-            title="编辑"
-            type="warning"
-            size="default"
-            icon="Edit"
-            @click="updateSku"
-          >
+          <el-button title="状态改变" v-has="'btn.Sku.updown'" :loading="row.load"
+            :type="row.isSale === 1 ? 'primary' : 'info'" size="default" :icon="row.isSale === 1 ? 'Bottom' : 'Top'"
+            @click="updateSale(row)"></el-button>
+          <el-button title="查看" v-has="'btn.Sku.detail'" type="success" size="default" icon="View"
+            @click="findSku(row)"></el-button>
+          <el-button title="编辑" v-has="'btn.Sku.update'" type="warning" size="default" icon="Edit" @click="updateSku">
           </el-button>
-          <el-popconfirm
-            width="180px"
-            :title="`你确定要删除${row.skuName}`"
-            @confirm="removeSku(row.id)"
-          >
+          <el-popconfirm width="180px" :title="`你确定要删除${row.skuName}`" @confirm="removeSku(row.id)">
             <template #reference>
-              <el-button
-                type="danger"
-                size="default"
-                icon="Delete"
-                title="删除"
-              ></el-button>
+              <el-button v-has="'btn.Sku.remove'" type="danger" size="default" icon="Delete" title="删除"></el-button>
             </template>
           </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      v-model:current-page="pageNo"
-      v-model:page-size="pageSize"
-      :page-sizes="[10, 20, 30, 40]"
-      :background="true"
-      layout="prev, pager, next, jumper,->,sizes,total"
-      :total="total"
-      @change="getHasSku"
-    />
+    <el-pagination v-model:current-page="pageNo" v-model:page-size="pageSize" :page-sizes="[10, 20, 30, 40]"
+      :background="true" layout="prev, pager, next, jumper,->,sizes,total" :total="total" @change="getHasSku" />
     <!-- 抽屉组件：展示商品详情 -->
     <el-drawer v-model="drawer" size="40%">
       <!-- 标题部分 -->
@@ -110,18 +48,11 @@
             <el-text>{{ skuInfo.price }}</el-text>
           </el-form-item>
           <el-form-item label="品牌属性">
-            <div
-              v-if="
-                skuInfo.skuAttrValueList instanceof Array &&
-                skuInfo.skuAttrValueList.length > 0
-              "
-            >
-              <el-tag
-                type="danger"
-                v-for="item in skuInfo.skuAttrValueList"
-                :key="item.id"
-                style="margin: 5px"
-              >
+            <div v-if="
+              skuInfo.skuAttrValueList instanceof Array &&
+              skuInfo.skuAttrValueList.length > 0
+            ">
+              <el-tag type="danger" v-for="item in skuInfo.skuAttrValueList" :key="item.id" style="margin: 5px">
                 {{ item.valueName }}
               </el-tag>
             </div>
@@ -130,17 +61,11 @@
             </div>
           </el-form-item>
           <el-form-item label="销售属性">
-            <div
-              v-if="
-                skuInfo.skuSaleAttrValueList instanceof Array &&
-                skuInfo.skuSaleAttrValueList.length > 0
-              "
-            >
-              <el-tag
-                type="success"
-                v-for="item in skuInfo.skuSaleAttrValueList"
-                style="margin: 5px"
-              >
+            <div v-if="
+              skuInfo.skuSaleAttrValueList instanceof Array &&
+              skuInfo.skuSaleAttrValueList.length > 0
+            ">
+              <el-tag type="success" v-for="item in skuInfo.skuSaleAttrValueList" style="margin: 5px">
                 {{ item.saleAttrValueName }}
               </el-tag>
             </div>
@@ -149,19 +74,11 @@
             </div>
           </el-form-item>
           <el-form-item label="商品图片">
-            <el-carousel
-              v-if="
-                skuInfo.skuImageList instanceof Array &&
-                skuInfo.skuImageList.length > 0
-              "
-              type="card"
-              style="width: 100%"
-            >
-              <el-carousel-item
-                class="banner"
-                v-for="item in skuInfo.skuImageList"
-                :key="item.id"
-              >
+            <el-carousel v-if="
+              skuInfo.skuImageList instanceof Array &&
+              skuInfo.skuImageList.length > 0
+            " type="card" style="width: 100%">
+              <el-carousel-item class="banner" v-for="item in skuInfo.skuImageList" :key="item.id">
                 <img :src="item.imgUrl" style="width: 80%; height: 80%" />
                 <!-- <el-image :src="item.imgUrl" fit="contain"></el-image> -->
               </el-carousel-item>

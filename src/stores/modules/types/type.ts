@@ -8,6 +8,7 @@ export interface UserState {
   avatar: string;
   roles: string[];
   routes: string[];
+  buttons: string[];
 }
 
 // 定义分类仓库state对象的ts类型

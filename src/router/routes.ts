@@ -1,3 +1,4 @@
+
 // 对外暴露配置路由(常量路由)
 export const constantRoute = [
   {
@@ -45,16 +46,6 @@ export const constantRoute = [
     },
   },
   {
-    path: "/:pathMatch(.*)*",
-    name: "Any",
-    redirect: "/404",
-    meta: {
-      title: "任意路由",
-      hidden: true,
-      icon: "Guide",
-    },
-  },
-  {
     path: "/screen",
     name: "Screen",
     component: () => import("@/views/Screen/index.vue"),
@@ -62,7 +53,11 @@ export const constantRoute = [
       title: "数据大屏",
       icon: "Platform",
     },
-  },
+  }
+];
+
+// 异步路由
+export const asyncRoute = [
   {
     path: "/acl",
     name: "Acl",
@@ -140,7 +135,7 @@ export const constantRoute = [
         },
       },
       {
-        path: "sku",
+        path: "/product/sku",
         name: "Sku",
         component: () => import("@/views/Product/Sku/index.vue"),
         meta: {
@@ -150,4 +145,17 @@ export const constantRoute = [
       },
     ],
   },
-];
+]
+
+// 任意路由
+export const anyRoute = {
+  path: "/:pathMatch(.*)*",
+  // redirect: "/404",
+  component: () => import("@/views/404/index.vue"),
+  name: "Any",
+  meta: {
+    title: "任意路由",
+    hidden: true,
+    icon: "Guide",
+  },
+};

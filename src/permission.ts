@@ -41,7 +41,14 @@ router.beforeEach(async (to, from, next) => {
           // 获取用户信息
           await userStore.userInfo();
           // 放行
-          next();
+          // 万一刷新时是异步路由，可能获取到用户信息、异步路由还没有加载完毕，出现空白效果
+          // 使用 replace: true 避免历史记录堆叠
+          if (to.path === '/') {
+            next();
+          } else {
+            next(to.path);
+          }
+          // next({...to});
         } catch (error) {
           // token过期：获取不到用户信息
           // 用户手动修改本地存储token
@@ -56,7 +63,7 @@ router.beforeEach(async (to, from, next) => {
     if (to.path == "/login") {
       next();
     } else {
-      next({ path: "/login", query: { redirect: to.path } });
+      next({ path: "/login", query: { redirect: to.fullPath } });
     }
   }
 });

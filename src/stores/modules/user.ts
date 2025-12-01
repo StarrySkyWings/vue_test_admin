@@ -12,7 +12,44 @@ import type { UserState } from "./types/type";
 // 引入操作本地存储的工具方法
 import { SET_TOKEN, GET_TOKEN, REMOVE_TOKEN } from "@/utils/token";
 // 引入路由(常量路由)
-import { constantRoute } from "@/router/routes";
+import { constantRoute, asyncRoute, anyRoute } from "@/router/routes";
+import router from "@/router";
+// 引入深拷贝方法
+import cloneDeep from "lodash/cloneDeep";
+
+// 用于过滤当前用户需要展示的异步路由
+function filterAsyncRoute(asyncRoute: any, routes: any) {
+  return asyncRoute.filter((item: any) => {
+    if (routes.includes(item.name)) {
+      if (item.children && item.children.length > 0) {
+        item.children = filterAsyncRoute(item.children, routes);
+      }
+      return true;
+    }
+  });
+}
+
+// 动态添加路由的方法
+function addRoutes(routes: any[]) {
+  routes.forEach((route: any) => {
+    // 检查路由是否已经存在
+    if (!router.hasRoute(route.name)) {
+      router.addRoute(route);
+
+      // 如果路由有子路由，递归添加
+      if (route.children && route.children.length > 0) {
+        // 注意：这里不需要再添加子路由，因为父路由添加时会包含子路由
+        // 但需要确保子路由的路径是相对于父路由的
+        route.children.forEach((child: any) => {
+          if (child.path && !child.path.startsWith("/")) {
+            // 确保子路由路径是相对的
+            child.path = child.path.replace(/^\//, "");
+          }
+        });
+      }
+    }
+  });
+}
 
 // 创建用户小仓库
 let useUserStroe = defineStore("User", {
@@ -25,6 +62,7 @@ let useUserStroe = defineStore("User", {
       avatar: "",
       roles: [],
       routes: [],
+      buttons: [],
     };
   },
   // 异步|逻辑的地方
@@ -57,6 +95,38 @@ let useUserStroe = defineStore("User", {
         this.avatar = result.data.avatar;
         this.roles = result.data.roles;
         this.routes = result.data.routes;
+        this.buttons = result.data.buttons
+        // 计算当前用户需要展示的异步路由
+        let userAsyncRoutes = filterAsyncRoute(
+          cloneDeep(asyncRoute),
+          result.data.routes
+        );
+        // 菜单的数据
+        // this.menuRoutes = [...constantRoute,...userAsyncRoutes,anyRoute]
+        // // 目前路由器管理的只有常量路由：用户计算完毕后异步路由、任意路由动态追加
+        // let res = [...userAsyncRoutes,anyRoute]
+        // res.forEach((route:any) => {
+        // 	router.addRoute(route);
+        // });
+        // 菜单的数据
+        this.menuRoutes = [...constantRoute, ...userAsyncRoutes];
+
+        // 动态添加路由 - 先清空所有动态路由，再重新添加
+        // 移除之前添加的动态路由（除了常量路由）
+        this.menuRoutes.forEach((route) => {
+          if (
+            route.name &&
+            !constantRoute.some((cr) => cr.name === route.name)
+          ) {
+            router.removeRoute(route.name);
+          }
+        });
+
+        // 添加异步路由
+        addRoutes(userAsyncRoutes);
+
+        // 最后添加任意路由（404路由）
+        router.addRoute(anyRoute);
         return "ok";
       } else {
         return Promise.reject(new Error(result.message));
@@ -71,13 +141,31 @@ let useUserStroe = defineStore("User", {
         this.username = "";
         this.avatar = "";
         REMOVE_TOKEN();
+
+        // 重置路由
+        this.resetRoutes();
         return "ok";
       } else {
         return Promise.reject(new Error(result.message));
       }
     },
+    // 重置路由
+    resetRoutes() {
+      // 移除所有动态添加的路由
+      this.menuRoutes.forEach((route) => {
+        if (route.name && !constantRoute.some((cr) => cr.name === route.name)) {
+          router.removeRoute(route.name);
+        }
+      });
+
+      // 重新设置菜单路由
+      this.menuRoutes = [...constantRoute];
+
+      // 重新添加任意路由
+      router.addRoute(anyRoute);
+    },
   },
-  getters: {},
+  // getters: {},
 });
 // 对外暴露获取小仓库方法
 export default useUserStroe;

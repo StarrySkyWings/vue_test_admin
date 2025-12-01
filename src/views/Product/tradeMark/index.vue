@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card">
       <!-- 卡片顶部添加品牌按钮 -->
-      <el-button type="primary" size="default" icon="Plus" @click="addTrademark"
+      <el-button v-has="'btn.Trademark.add'" type="primary" size="default" icon="Plus" @click="addTrademark"
         >添加品牌</el-button
       >
       <!-- 表格组件：用于展示已有的品牌数据 -->
@@ -60,13 +60,14 @@
           </template>
         </el-table-column>
         <el-table-column label="品牌操作">
-          <template #="{ row, $index }">
+          <template #="{ row }">
             <el-button
               type="warning"
               size="small"
               icon="Edit"
               @click="updateTrademark(row)"
               title="编辑"
+              v-has="'btn.Trademark.update'"
             ></el-button>
             <el-popconfirm
               icon="Delete"
@@ -80,6 +81,7 @@
                   size="small"
                   icon="Delete"
                   title="删除"
+                  v-has="'btn.Trademark.remove'"
                 ></el-button>
               </template>
             </el-popconfirm>
